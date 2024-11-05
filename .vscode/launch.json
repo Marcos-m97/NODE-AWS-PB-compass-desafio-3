@@ -1,0 +1,21 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "node",
+        "request": "launch",
+        "name": "Launch Program",
+        "program": "${workspaceFolder}/index.ts", // Substitua pelo seu arquivo de entrada
+        "env": {
+          "DB_HOST": "127.0.0.1",
+          "DB_USER": "root",
+          "DB_PASSWORD": "Alice821!",
+          "DB_NAME": "compasspb",
+          "DB_PORT": "3306",
+          "SERVER_PORT": "3000"
+        },
+        "skipFiles": ["<node_internals>/**"]
+      }
+    ]
+  }
+  
