@@ -595,7 +595,7 @@ pedidoRouter.get('/searchAll', privateRoute, async (req, res, next) => {
  *                   description: Mensagem de erro.
  *                   example: "Pedido não encontrado."
  */
-pedidoRouter.put('/updatePedido', privateRoute, async (req, res, next) => {
+pedidoRouter.patch('/updatePedido', privateRoute, async (req, res, next) => {
   try {
     await pedidoController.updateId(req, res, next)
   } catch (error) {
@@ -664,7 +664,7 @@ pedidoRouter.put('/updatePedido', privateRoute, async (req, res, next) => {
  *                   description: Mensagem de erro.
  *                   example: "Pedido não encontrado."
  */
-pedidoRouter.put('/deletePedido', privateRoute, async (req, res, next) => {
+pedidoRouter.delete('/deletePedido', privateRoute, async (req, res, next) => {
   try {
     await pedidoController.deletePedido(req, res, next)
   } catch (error) {

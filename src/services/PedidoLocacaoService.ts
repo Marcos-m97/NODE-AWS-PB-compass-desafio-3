@@ -323,11 +323,17 @@ class PedidoService {
         throw new AppErrors('Esse pedido já está cancelado.', 400)
       }
 
-      if (statusPedidoData.statusPedido != EStatusPedido.Aberto) {
+      if (
+        statusPedidoData.statusPedido != EStatusPedido.Aberto &&
+        statusPedidoData.statusPedido != EStatusPedido.Aprovado
+      ) {
         throw new AppErrors('Esse pedido não pode ser cancelado.', 400)
       }
 
-      if (statusPedidoData.statusPedido === EStatusPedido.Aberto) {
+      if (
+        statusPedidoData.statusPedido === EStatusPedido.Aberto ||
+        statusPedidoData.statusPedido === EStatusPedido.Aprovado
+      ) {
         const deletePedido = await this.pedidoRepository.updatePedidoId(
           pedidoData.id,
           {

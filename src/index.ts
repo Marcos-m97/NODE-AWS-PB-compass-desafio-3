@@ -24,10 +24,10 @@ app.use(express.json())
 // rota de autenticação
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 app.use('/api/v1/login', authRouter)
-app.use('/api/v1/clientes', clienteRouter)
 app.use('/api/v1/users', userRouter)
-app.use('/api/v1/pedidos', pedidoRouter)
+app.use('/api/v1/clientes', clienteRouter)
 app.use('/api/v1/carros', carroRouter)
+app.use('/api/v1/pedidos', pedidoRouter)
 
 app.use(errorMiddlewere)
 
