@@ -8,7 +8,6 @@
     return regexnomeCompleto.test(nomeCompleto);
   }
   
-
   export function validarCPF(cpf: string): boolean {
     cpf = cpf.replace(/[^\d]+/g, ""); 
   
@@ -42,3 +41,7 @@
     return regexEmail.test(e_mail);
   }
   
+  export function validPassword(password: string): boolean {
+    const regexassword = /^(?=.*[A-Z])(?=.*[a-zA-Z0-9])[A-Za-z0-9]+$/
+    return regexassword.test(password)
+  }

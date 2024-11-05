@@ -2,9 +2,11 @@ import { Request, Response, NextFunction } from 'express'
 import { User } from '../models/usermodel.js'
 import bcrypt from 'bcrypt'
 import { Op } from 'sequelize'
+import UserService from '../services/user.service.js'
+import { userInput } from '../definitions/users.types.js'
 
 class UserController {
-  constructor() {}
+  constructor(private userService: UserService) {}
 
   public async createUser(
     req: Request,
@@ -12,44 +14,14 @@ class UserController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const { fullName, email, password } = req.body
+      
+      const userData: userInput = req.body
+      const newUser = await this.userService.registerUser(userData)
+      
 
-      if (!fullName) {
-        return res
-          .status(400)
-          .json({ message: 'Campo Nome completo é obrigatório.' })
-      }
-      if (!email) {
-        return res.status(400).json({ message: 'Campo E-mail é obrigatório.' })
-      }
-      if (!password) {
-        return res.status(400).json({ message: 'Campo Senha é obrigatório.' })
-      }
-
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-      if (!emailRegex.test(email)) {
-        return res.status(400).json({ message: 'Formato de e-mail inválido.' })
-      }
-
-      const existingUser = await User.findOne({ where: { email } })
-      if (existingUser) {
-        return res.status(400).json({ message: 'E-mail já cadastrado!' })
-      }
-
-      const hashedPassword = await bcrypt.hash(password, 10)
-
-      const newUser = await User.create({
-        fullName,
-        email,
-        password: hashedPassword
-      })
-
-      return res.status(201).json({
-        id: newUser.id,
-        fullName: newUser.fullName,
-        email: newUser.email,
-        createdAt: newUser.createdAt
-      })
+      return res
+        .status(201)
+        .json({ msg: 'Usuário registrado com sucesso.', User: newUser!.id})
     } catch (error) {
       next(error)
     }
@@ -211,4 +183,4 @@ class UserController {
   }
 }
 
-export default new UserController()
+export default UserController

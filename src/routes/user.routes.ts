@@ -1,6 +1,12 @@
 import { Router } from 'express'
-import userController from '../controllers/user.controller.js'
 import privateRoute from '../middlewares/auth.middlewere.js'
+import UserController from '../controllers/user.controller.js'
+import UserService from '../services/user.service.js'
+import UserRepositorie from '../repositories/user.repositorie.js'
+
+const userRepositorie = new UserRepositorie()
+const userService = new UserService(userRepositorie)
+const userController = new UserController(userService)
 
 const router = Router()
 
@@ -64,7 +70,6 @@ const router = Router()
  *                   type: string
  *                   example: "Campo 'email' é obrigatório."
  */
-
 router.post('/', privateRoute, async (req, res, next) => {
   try {
     await userController.createUser(req, res, next)
@@ -174,8 +179,6 @@ router.get('/', privateRoute, async (req, res, next) => {
   }
 })
 
-
-
 /**
  * @swagger
  * /api/v1/users/{id}:
@@ -227,8 +230,6 @@ router.get('/:id', privateRoute, async (req, res, next) => {
     next(error)
   }
 })
-
-
 
 /**
  * @swagger
@@ -294,8 +295,6 @@ router.put('/:id', privateRoute, async (req, res, next) => {
     next(error)
   }
 })
-
-
 
 /**
  * @swagger

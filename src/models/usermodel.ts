@@ -3,23 +3,23 @@ import { DataTypes, Model, Optional } from 'sequelize';
 import sequelize from '../db.js';
 
 interface UserAttributes {
-  id: string;
+  id?: string;
   fullName: string;
   email: string;
   password: string;
-  createdAt: Date;
+  createdAt?: Date;
   deletedAt?: Date | null;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'createdAt' | 'deletedAt'> {}
+//interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'createdAt' | 'deletedAt'> {}
 
-class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
-  public id!: string;
+class User extends Model<UserAttributes> {
+  public id?: string;
   public fullName!: string;
   public email!: string;
   public password!: string;
-  public createdAt!: Date;
-  public deletedAt!: Date | null;
+  public createdAt?: Date;
+  public deletedAt?: Date | null;
 
   
 }
