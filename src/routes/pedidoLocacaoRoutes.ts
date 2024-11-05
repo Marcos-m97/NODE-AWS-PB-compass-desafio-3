@@ -287,7 +287,7 @@ pedidoRouter.post('/create', privateRoute, async (req, res, next) => {
  *                   example: "Pedido não encontrado."
  */
 
-pedidoRouter.get('/searchId', privateRoute, async (req, res, next) => {
+pedidoRouter.get('/searchId/:id', privateRoute, async (req, res, next) => {
   try {
     await pedidoController.searchPedido(req, res, next)
   } catch (error) {
@@ -595,13 +595,17 @@ pedidoRouter.get('/searchAll', privateRoute, async (req, res, next) => {
  *                   description: Mensagem de erro.
  *                   example: "Pedido não encontrado."
  */
-pedidoRouter.patch('/updatePedido', privateRoute, async (req, res, next) => {
-  try {
-    await pedidoController.updateId(req, res, next)
-  } catch (error) {
-    next(error)
+pedidoRouter.patch(
+  '/updatePedido',
+  privateRoute,
+  async (req, res, next) => {
+    try {
+      await pedidoController.updateId(req, res, next)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 // Swagger deletePedido
 /**
@@ -664,12 +668,16 @@ pedidoRouter.patch('/updatePedido', privateRoute, async (req, res, next) => {
  *                   description: Mensagem de erro.
  *                   example: "Pedido não encontrado."
  */
-pedidoRouter.delete('/deletePedido', privateRoute, async (req, res, next) => {
-  try {
-    await pedidoController.deletePedido(req, res, next)
-  } catch (error) {
-    next(error)
+pedidoRouter.delete(
+  '/deletePedido/:id',
+  privateRoute,
+  async (req, res, next) => {
+    try {
+      await pedidoController.deletePedido(req, res, next)
+    } catch (error) {
+      next(error)
+    }
   }
-})
+)
 
 export default pedidoRouter

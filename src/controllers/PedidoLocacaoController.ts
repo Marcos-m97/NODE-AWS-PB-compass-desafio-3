@@ -31,13 +31,15 @@ class PedidoController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const pedidoIdData: Pedido = req.body
-      const pedidoId = await this.pedidoService.searchIdPedido(pedidoIdData)
-      return res.status(200).json(pedidoId)
+      const id = req.params.id
+      const pedido = await this.pedidoService.searchIdPedido(id)
+      return res.status(200).json(pedido)
     } catch (error) {
       next(error)
     }
   }
+
+ 
 
   public async searchPedidoAll(
     req: Request,
@@ -114,10 +116,8 @@ class PedidoController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const pedidoDeleteData: PedidoRequestBody = req.body
-      const pedidoDelete = await this.pedidoService.deletePedido(
-        pedidoDeleteData
-      )
+      const id = req.params.id
+      const pedidoDelete = await this.pedidoService.deletePedido(id)
 
       return res.status(204).json(pedidoDelete)
     } catch (error) {

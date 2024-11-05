@@ -6,6 +6,8 @@ import { calcularTaxaLocacao } from '../services/TaxaLocacaoService.js'
 import axios from 'axios'
 import https from 'https'
 import EStatusPedido from '../definitions/pedidos.def/EPedido.js'
+import { UUID } from 'crypto'
+
 
 class PedidoService {
   private pedidoRepository: PedidoRepository
@@ -58,11 +60,11 @@ class PedidoService {
     }
   }
 
-  public async searchIdPedido(pedidoData: Pedido): Promise<Pedido | null> {
+  public async searchIdPedido(pedidoData: string): Promise<Pedido | null> {
     try {
       // validation this Id Pedido existing
       const pedidoIdExisting = await this.pedidoRepository.findPedidoId(
-        pedidoData.id
+        pedidoData
       )
 
       if (!pedidoIdExisting) {
@@ -305,14 +307,12 @@ class PedidoService {
     }
   }
 
-  public async deletePedido(pedidoData: Pedido): Promise<Pedido | null> {
+  public async deletePedido(id: string): Promise<Pedido | null> {
     try {
-      const pedidoExisting = await this.pedidoRepository.findPedidoId(
-        pedidoData.id
-      )
+      const pedidoExisting = await this.pedidoRepository.findPedidoId(id)
 
       const statusPedidoData = await this.pedidoRepository.findStatusPedidoId(
-        pedidoData.id
+        id 
       )
 
       if (!pedidoExisting) {
@@ -335,7 +335,7 @@ class PedidoService {
         statusPedidoData.statusPedido === EStatusPedido.Aprovado
       ) {
         const deletePedido = await this.pedidoRepository.updatePedidoId(
-          pedidoData.id,
+          id,
           {
             statusPedido: EStatusPedido.Cancelado
           }

@@ -77,9 +77,7 @@ class ClienteControler {
 
   public async updateCliente(
     req: Request,
-
     res: Response,
-
     next: NextFunction
   ): Promise<Response | void> {
     try {
@@ -104,7 +102,6 @@ class ClienteControler {
   ): Promise<Response | void> {
     try {
       const id = req.params.id
-
       const cliente = await this.clienteService.getClienteById(id)
 
       return res.status(200).json(cliente)

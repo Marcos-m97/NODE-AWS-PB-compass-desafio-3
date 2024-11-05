@@ -97,11 +97,11 @@ class PedidoRepository {
     }
   }
 
-  public async findPedidoId(id: UUID): Promise<Pedido | null> {
+  public async findPedidoId(id:string): Promise<Pedido | null> {
     try {
       const existingPedidoId = await Pedido.findOne({
         where: {
-          id: id
+          id: id as UUID
         },
         include: [
           {
@@ -301,7 +301,7 @@ class PedidoRepository {
     }
   }
 
-  public async findStatusPedidoId(id: UUID): Promise<Pedido> {
+  public async findStatusPedidoId(id: string): Promise<Pedido> {
     try {
       const statusPedido = await Pedido.findOne({
         where: {
@@ -321,7 +321,7 @@ class PedidoRepository {
   }
 
   public async updatePedidoId(
-    id: UUID,
+    id: string,
     dadosAtualizados: Partial<{
       statusPedido?: EStatusPedido
       dataCancelamento?: Date
