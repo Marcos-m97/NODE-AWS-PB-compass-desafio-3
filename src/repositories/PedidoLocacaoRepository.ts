@@ -247,7 +247,7 @@ class PedidoRepository {
   public async findPedidoForRangeData(
     dataInicial?: Date | null,
     dataFinal?: Date | null,
-    orderDirection: 'ASC' | 'DESC' = 'ASC'
+    orderDirection: string = 'ASC'
   ): Promise<Pedido[] | null> {
     try {
       const where: WhereOptions<IPedido> = {}

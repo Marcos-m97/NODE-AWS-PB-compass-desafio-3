@@ -3,7 +3,9 @@ import PedidoService from '../services/PedidoLocacaoService.js'
 import Pedido from '../models/Pedido.js'
 
 // import Intefaces
-import PedidoRequestBody from '../definitions/pedidos.def/IPedidoRequestBody.js'
+import PedidoRequestBody, {
+  filtertype
+} from '../definitions/pedidos.def/IPedidoRequestBody.js'
 
 class PedidoController {
   private pedidoService: PedidoService
@@ -39,55 +41,60 @@ class PedidoController {
     }
   }
 
- 
-
   public async searchPedidoAll(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const pedidoAllData: PedidoRequestBody = req.body
+      const filter: filtertype = {
+        cpf: req.query.cpf as string,
+        orderBy: (req.query.orderBy as string) || 'ASC',
+        page: parseInt(req.query.page as string) || 1,
+        pageSize: parseInt(req.query.pageSize as string) || 5,
+        statusPedido: req.query.statusPedido as string,
+        dataHoraInicial: req.query.dataHoraInicial
+          ? new Date(req.query.dataHoraInicial as string)
+          : undefined,
+        dataHoraFinal: req.query.dataHoraFinal
+          ? new Date(req.query.dataHoraFinal as string)
+          : undefined
+      }
 
-      if (pedidoAllData.statusPedido) {
+      // Busca por `statusPedido`
+      if (filter.statusPedido) {
         const pedidoAllStatusPedido = await this.pedidoService.searchAllPedidos(
-          pedidoAllData.statusPedido
+          filter.statusPedido
         )
-        return res.status(201).json(pedidoAllStatusPedido)
+        return res.status(200).json(pedidoAllStatusPedido)
       }
 
-      if (pedidoAllData.cpf || pedidoAllData.cpf === '') {
+      // Busca por CPF
+      if (filter.cpf) {
         const pedidoByCpf = await this.pedidoService.searchPedidoForCpf(
-          pedidoAllData.cpf
+          filter.cpf
         )
-        return res.status(201).json(pedidoByCpf)
+        return res.status(200).json(pedidoByCpf)
       }
 
-      if (
-        pedidoAllData.dataHoraInicial ||
-        pedidoAllData.dataHoraFinal ||
-        pedidoAllData.orderBy
-      ) {
-        const { dataHoraInicial, dataHoraFinal, orderBy } = req.body
-
+      // Busca por Range de Datas e Ordenação
+      if (filter.dataHoraInicial || filter.dataHoraFinal || filter.orderBy) {
         const pedidoByRangeData =
           await this.pedidoService.searchPedidoForRangeData(
-            dataHoraInicial,
-            dataHoraFinal,
-            orderBy
+            filter.dataHoraInicial,
+            filter.dataHoraFinal,
+            filter.orderBy
           )
-
         return res.status(200).json(pedidoByRangeData)
       }
 
-      if (pedidoAllData.page || pedidoAllData.pageSize) {
-        const pedidoAllPageSize = await this.pedidoService.searchAllPedidos(
-          null,
-          pedidoAllData.page,
-          pedidoAllData.pageSize
-        )
-        return res.status(201).json(pedidoAllPageSize)
-      }
+      // Paginação
+      const pedidoAllPageSize = await this.pedidoService.searchAllPedidos(
+        null,
+        filter.page,
+        filter.pageSize
+      )
+      return res.status(200).json(pedidoAllPageSize)
     } catch (error) {
       next(error)
     }

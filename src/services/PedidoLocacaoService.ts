@@ -6,7 +6,7 @@ import { calcularTaxaLocacao } from '../services/TaxaLocacaoService.js'
 import axios from 'axios'
 import https from 'https'
 import EStatusPedido from '../definitions/pedidos.def/EPedido.js'
-import { UUID } from 'crypto'
+
 
 
 class PedidoService {
@@ -135,7 +135,7 @@ class PedidoService {
   public async searchPedidoForRangeData(
     dataInicial?: Date | null,
     dataFinal?: Date | null,
-    orderDirection?: 'ASC' | 'DESC'
+    orderDirection?: string
   ): Promise<Pedido[] | null> {
     try {
       const pedidoForRangeData =
