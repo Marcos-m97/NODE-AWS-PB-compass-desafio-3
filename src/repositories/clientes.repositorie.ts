@@ -110,13 +110,14 @@ class ClientesRepositorie {
     }
   }
 
-  public async softDeleteCliente(id: string): Promise<number> {
+  public async softDeleteCliente(id: string): Promise<Cliente> {
     try {
-      const result = await Cliente.update(
+      await Cliente.update(
         { dataExclusao: new Date() },
         { where: { id, dataExclusao: null } }
       )
-      return result[0]
+      const deleted = await Cliente.findByPk(id)
+      return deleted!
     } catch (err) {
       throw err
     }

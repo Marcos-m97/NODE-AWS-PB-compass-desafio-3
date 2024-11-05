@@ -2,7 +2,8 @@ import {
   userCreation,
   userInput,
   UserfilterType,
-  UserfilteredResponse
+  UserfilteredResponse,
+  userUpdates
 } from '../definitions/users.def/users.types.js'
 import { AppErrors } from '../middlewares/errorMiddlewere.js'
 import UserRepositorie from '../repositories/user.repositorie.js'
@@ -18,7 +19,7 @@ import bcrypt from 'bcrypt'
 class UserService {
   constructor(private userRepositorie: UserRepositorie) {}
 
-  public async registerUser(userData: userInput): Promise<User|null|void> {
+  public async registerUser(userData: userInput): Promise<User | null | void> {
     if (!userData.fullName) {
       throw new AppErrors('O campo fullName é obrigatório', 400)
     }
@@ -138,7 +139,7 @@ class UserService {
 
       const offset = (page - 1) * limit
 
-      const clientesList = await this.userRepositorie.filterUsers(
+      const usersList = await this.userRepositorie.filterUsers(
         whereClaus,
         order,
         limit,
@@ -149,7 +150,7 @@ class UserService {
 
       let pagesQty = Math.ceil(totalUsers / limit)
 
-      if (!clientesList || clientesList.length === 0 || totalUsers === 0) {
+      if (!usersList || usersList.length === 0 || totalUsers === 0) {
         throw new AppErrors('Cliente nao encontrado', 404)
       }
 
@@ -160,7 +161,7 @@ class UserService {
         totalUsersFound: totalUsers,
         totalPages: pagesQty,
         currentPage: page,
-        Users: clientesList
+        Users: usersList
       }
 
       return resp
@@ -173,8 +174,81 @@ class UserService {
     const isUser = await this.userRepositorie.findUserById(id)
     if (!isUser) {
       throw new AppErrors('Usuário não encontrado.', 400)
+    }
+    return isUser!
+  }
+
+  public async redefineUsers(
+    updates: userUpdates,
+    userId: string
+  ): Promise<User | null> {
+    const existingUser = await this.userRepositorie.findUserById(userId)
+
+    if (!existingUser) {
+      throw new AppErrors('Usuário não encontrado', 404)
+    }
+
+    if (existingUser.deletedAt) {
+      throw new AppErrors('Usuário excluido', 409)
+    }
+
+    const up: userUpdates = {}
+
+    if (updates.fullName) {
+      if (validarnomeCompleto(updates.fullName) == false) {
+        throw new AppErrors('Nome completo inválido', 400)
       }
-      return isUser!
+      up.fullName = updates.fullName
+    }
+
+    if (updates.email) {
+      if (validarEmail(updates.email) == false) {
+        throw new AppErrors('Email inválido', 400)
+      }
+
+      if (existingUser.email && existingUser.id !== userId) {
+        throw new AppErrors('Já existe um user com este email', 409)
+      }
+      up.email = updates.email
+    }
+
+    if (updates.password) {
+      if (updates.password.length < 6) {
+        throw new AppErrors(
+          'Formato de senha invalido. No minimo uma letra maiuscula e 6 caracteres são necessários.',
+          404
+        )
+      }
+      if (validPassword(updates.password) == false) {
+        throw new AppErrors(
+          'Formato de senha invalido. No minimo uma letra maiuscula e 6 caracteres são necessários.',
+          404
+        )
+      }
+
+      up.password = await bcrypt.hash(updates.password, 10)
+    }
+
+    const updatedData = await this.userRepositorie.atualizarUsuarios(up, userId)
+    return updatedData
+  }
+
+  public async softDeleteUser(id: string): Promise<User> {
+    const user = await this.userRepositorie.findUserById(id)
+
+    if (!user) {
+      throw new AppErrors('user não encontrado', 404)
+    }
+    if (user.deletedAt) {
+      throw new AppErrors('user já está excluído', 409)
+    }
+
+    try {
+      const deletedUser = await this.userRepositorie.softDeleteUsers(id)
+      return deletedUser
+    } catch (error) {
+      throw new AppErrors('Falha ao excluir o cliente', 500)
+    }
   }
 }
 export default UserService

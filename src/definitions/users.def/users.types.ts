@@ -29,3 +29,11 @@ export type UserfilterType = {
   deletedAt?: Date
   excluded?: string
 }
+
+export type userUpdates = {
+  fullName?: string
+  email?: string
+  password?: string
+}
+
+

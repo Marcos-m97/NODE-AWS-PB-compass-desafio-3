@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express'
 import { User } from '../models/usermodel.js'
 import bcrypt from 'bcrypt'
-import { Op } from 'sequelize'
 import UserService from '../services/user.service.js'
 import {
   UserfilterType,
-  userInput
+  userInput,
+  userUpdates
 } from '../definitions/users.def/users.types.js'
 
 class UserController {
@@ -84,38 +84,12 @@ class UserController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const { id } = req.params
-      const { fullName, email, password } = req.body
+      const userId: string = req.params.id
+      const updates: userUpdates = req.body
 
-      const user = await User.findOne({ where: { id, deletedAt: null } })
+      const updatedUser = await this.userService.redefineUsers(updates, userId)
 
-      if (!user) {
-        return res.status(404).json({ message: 'Usuário não encontrado.' })
-      }
-
-      if (email && email !== user.email) {
-        const emailExists = await User.findOne({
-          where: { email, deletedAt: null }
-        })
-        if (emailExists) {
-          return res
-            .status(400)
-            .json({ message: 'Email já em uso por outro usuário.' })
-        }
-      }
-
-      if (fullName) user.fullName = fullName
-      if (email) user.email = email
-      if (password) user.password = await bcrypt.hash(password, 10)
-
-      await user.save()
-
-      return res.status(200).json({
-        id: user.id,
-        fullName: user.fullName,
-        email: user.email,
-        createdAt: user.createdAt
-      })
+      return res.status(200).json(updatedUser)
     } catch (error) {
       next(error)
     }
@@ -128,18 +102,8 @@ class UserController {
   ): Promise<Response | void> {
     try {
       const { id } = req.params
-
-      const user = await User.findOne({ where: { id, deletedAt: null } })
-
-      if (!user) {
-        return res.status(404).json({ message: 'Usuário não encontrado.' })
-      }
-
-      user.deletedAt = new Date()
-
-      await user.save()
-
-      return res.status(200).json({ message: 'Usuário excluído com sucesso.' })
+      const deleted = await this.userService.softDeleteUser(id)
+      return res.status(200).json({ message: 'Usuário excluído com sucesso.', data: deleted.deletedAt })
     } catch (error) {
       next(error)
     }

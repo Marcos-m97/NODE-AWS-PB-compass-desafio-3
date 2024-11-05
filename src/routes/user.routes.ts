@@ -287,7 +287,7 @@ router.get('/:id', privateRoute, async (req, res, next) => {
  *                   type: string
  *                   example: "Usuário não encontrado."
  */
-router.put('/:id', privateRoute, async (req, res, next) => {
+router.patch('/:id', privateRoute, async (req, res, next) => {
   try {
     await userController.updateUser(req, res, next)
   } catch (error) {

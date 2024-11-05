@@ -85,20 +85,13 @@ class ClienteControler {
     try {
       const clienteId: string = req.params.id
       const updates: clientUpdates = req.body
-      const updated = await this.clienteService.redefineClientes(
+      const updatedCliente = await this.clienteService.redefineClientes(
         updates,
 
         clienteId
       )
 
-      return res.status(200).json({
-        Id: clienteId,
-        nomeCompleto: updated!.nome,
-        dataDeNascimento: updated!.dataNascimento,
-        CPF: updated!.cpf,
-        email: updated!.email,
-        telefone: updated!.telefone
-      })
+      return res.status(200).json(updatedCliente)
     } catch (error) {
       next(error)
     }
@@ -130,9 +123,12 @@ class ClienteControler {
     const { id } = req.params
 
     try {
-      await this.clienteService.softDeleteCliente(id)
+      const deleted = await this.clienteService.softDeleteCliente(id)
 
-      return res.status(204).json({ message: 'Cliente excluído com sucesso' })
+      return res.status(200).json({
+        message: 'Usuário excluído com sucesso.',
+        data: deleted.dataExclusao
+      })
     } catch (error) {
       next(error)
     }

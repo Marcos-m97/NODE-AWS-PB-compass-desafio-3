@@ -1,7 +1,8 @@
 import {
   userCreation,
   UserfilterType,
-  userInput
+  userInput,
+  userUpdates
 } from '../definitions/users.def/users.types.js'
 import { User } from '../models/usermodel.js'
 
@@ -64,5 +65,32 @@ class UserRepositorie {
       throw err
     }
   }
+
+  public async atualizarUsuarios(
+    updates: userUpdates,
+    id: string
+  ): Promise<User | null> {
+    try {
+      await User.update(updates, { where: { id: id } })
+      const patch = await User.findByPk(id)
+      return patch
+    } catch (err) {
+      throw err
+    }
+  }
+
+  public async softDeleteUsers(
+    id: string
+  ): Promise<User> {
+    try {
+      await User.update({ deletedAt: new Date() }, { where: { id: id } })
+      const deleted = await User.findByPk(id)
+      return deleted!
+    } catch (err) {
+      throw err
+    }
+  }
 }
+
+
 export default UserRepositorie

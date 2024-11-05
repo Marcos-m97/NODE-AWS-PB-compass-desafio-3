@@ -210,7 +210,7 @@ class ClienteService {
   public async redefineClientes(
     updates: clientUpdates,
     clienteId: string
-  ): Promise<clientUpdates | null> {
+  ): Promise<Cliente | null> {
     const existCliente = await this.clientesRepositorie.findClienteById(
       clienteId
     )
@@ -219,7 +219,7 @@ class ClienteService {
       throw new AppErrors('Cliente não encontrado', 404)
     }
 
-    console.log(existCliente.dataExclusao)
+    
     if (existCliente.dataExclusao) {
       throw new AppErrors('Cliente excluido', 409)
     }
@@ -291,7 +291,7 @@ class ClienteService {
     return cliente
   }
 
-  public async softDeleteCliente(id: string): Promise<void> {
+  public async softDeleteCliente(id: string): Promise<Cliente> {
     const cliente = await this.clientesRepositorie.findClienteById(id)
 
     if (!cliente) {
@@ -303,9 +303,10 @@ class ClienteService {
     }
 
     const result = await this.clientesRepositorie.softDeleteCliente(id)
-    if (result === 0) {
+    if (!result) {
       throw new AppErrors('Falha ao excluir o cliente', 500)
     }
+    return result
   }
 }
 
