@@ -38,56 +38,37 @@ class ClienteControler {
 
   public async readClientes(
     req: Request,
-
     res: Response,
-
     next: NextFunction
   ): Promise<Response | void> {
     let dataFilter: filterType = {
       nome: req.query.nomeCompleto as string,
-
       dataNascimento: req.query.dataNascimento
         ? new Date(req.query.dataNascimento as string)
         : undefined,
-
       cpf: req.query.cpf as string,
-
       email: req.query.email as string,
-
       telefone: req.query.telefone as string,
-
       dataCadastro: req.query.dataCadastro
         ? new Date(req.query.dataCadastro as string)
         : undefined,
-
       dataExclusao: req.query.dataExclusao
         ? new Date(req.query.dataExclusao as string)
         : undefined,
-
       excluido: req.query.excluido as string
     }
-
     const orderBy = (req.query.orderBy as string) || 'nome'
-
     const orderDirection = (req.query.orderDirection as string) || 'ASC'
-
     const limit = parseInt(req.query.limit as string) || 5
-
     const page = parseInt(req.query.page as string) || 1
-
     try {
       const filteredList = await this.clienteService.filterClientes(
         dataFilter,
-
         limit,
-
         page,
-
         orderBy,
-
         orderDirection
       )
-
       return res.status(200).json(filteredList)
     } catch (error) {
       next(error)

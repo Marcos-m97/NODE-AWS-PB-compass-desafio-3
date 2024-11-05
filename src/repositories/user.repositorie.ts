@@ -1,4 +1,4 @@
-import { userCreation, userInput } from '../definitions/users.types.js'
+import { userCreation, UserfilterType, userInput } from '../definitions/users.types.js'
 import { User } from '../models/usermodel.js'
 
 class UserRepositorie {
@@ -19,6 +19,36 @@ class UserRepositorie {
       return newUser
     } catch (error) {
       throw error
+    }
+  }
+
+  public async filterUsers(
+    whereClaus: UserfilterType,
+    order: any,
+    limit: number,
+    offset: number
+  ): Promise<User[] | null> {
+    try {
+      const clientes = await User.findAll({
+        where: whereClaus,
+        order: order,
+        limit: limit,
+        offset: offset,
+        attributes: { exclude: ['createdAt', 'deletedAt'] }
+      })
+
+      return clientes
+    } catch (err) {
+      throw err
+    }
+  }
+
+  public async countClientes(whereClaus: UserfilterType): Promise<number> {
+    try {
+      const count = await User.count({ where: whereClaus })
+      return count
+    } catch (err) {
+      throw err
     }
   }
 }

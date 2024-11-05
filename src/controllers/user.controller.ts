@@ -3,7 +3,8 @@ import { User } from '../models/usermodel.js'
 import bcrypt from 'bcrypt'
 import { Op } from 'sequelize'
 import UserService from '../services/user.service.js'
-import { userInput } from '../definitions/users.types.js'
+import { UserfilterType, userInput } from '../definitions/users.types.js'
+import { filteredResponse } from '../definitions/clientes.types.js'
 
 class UserController {
   constructor(private userService: UserService) {}
@@ -14,14 +15,12 @@ class UserController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      
       const userData: userInput = req.body
       const newUser = await this.userService.registerUser(userData)
-      
 
       return res
         .status(201)
-        .json({ msg: 'Usuário registrado com sucesso.', User: newUser!.id})
+        .json({ msg: 'Usuário registrado com sucesso.', UserID: newUser!.id })
     } catch (error) {
       next(error)
     }
@@ -32,61 +31,30 @@ class UserController {
     res: Response,
     next: NextFunction
   ): Promise<Response | void> {
+    let dataFilter: UserfilterType = {
+      fullName: req.query.fullName as string,
+      email: req.query.email as string,
+      createdAt: req.query.createdAt
+        ? new Date(req.query.dataCadastro as string)
+        : undefined,
+      deletedAt: req.query.dataExclusao
+        ? new Date(req.query.dataExclusao as string)
+        : undefined,
+      excluded: req.query.excluido as string
+    }
+    const orderBy = (req.query.orderBy as string) || 'createdAt'
+    const orderDirection = (req.query.orderDirection as string) || 'ASC'
+    const limit = parseInt(req.query.limit as string) || 5
+    const page = parseInt(req.query.page as string) || 1
     try {
-      const {
-        fullName,
-        email,
-        excluded,
-        sortBy,
-        order,
-        page = 1,
-        limit = 10
-      } = req.query
-
-      const where: any = {}
-
-      if (fullName) {
-        where.fullName = { [Op.like]: `%${fullName}%` }
-      }
-
-      if (email) {
-        where.email = { [Op.like]: `%${email}%` }
-      }
-
-      if (excluded === 'true') {
-        where.deletedAt = { [Op.not]: null }
-      } else if (excluded === 'false') {
-        where.deletedAt = null
-      }
-
-      const validSortColumns = ['fullName', 'createdAt', 'deletedAt']
-      let orderOption: any = [['createdAt', 'DESC']]
-
-      if (sortBy && validSortColumns.includes(sortBy as string)) {
-        const sortOrder = order === 'ASC' || order === 'DESC' ? order : 'ASC'
-        orderOption = [[sortBy, sortOrder]]
-      }
-
-      const offset = (Number(page) - 1) * Number(limit)
-
-      const { rows: users, count: totalUsers } = await User.findAndCountAll({
-        attributes: ['id', 'fullName', 'email', 'createdAt', 'deletedAt'],
-        where,
-        order: orderOption,
-        limit: Number(limit),
-        offset
-      })
-
-      if (users.length === 0) {
-        return res.status(404).json({ message: 'Nenhum usuário encontrado.' })
-      }
-
-      return res.status(200).json({
-        totalUsers,
-        totalPages: Math.ceil(totalUsers / Number(limit)),
-        currentPage: Number(page),
-        users
-      })
+      const filteredList = await this.userService.filterUsers(
+        dataFilter,
+        limit,
+        page,
+        orderBy,
+        orderDirection
+      )
+      return res.status(200).json(filteredList)
     } catch (error) {
       next(error)
     }
