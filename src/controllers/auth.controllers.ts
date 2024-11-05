@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import AuthService from '../services/auth.service.js'
-import { AuthInput } from '../definitions/auth.types.js'
+import { AuthInput } from '../definitions/auth.def/auth.types.js'
 
 class AuthControler {
   private authService: AuthService

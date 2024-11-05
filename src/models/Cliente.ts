@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize'
 
 import sequelize from '../db.js'
 
-import ICliente from '../definitions/pedidos.interfaces/ICliente.js'
+import ICliente from '../definitions/pedidos.def/ICliente.js'
 
 import { UUID } from 'crypto'
 

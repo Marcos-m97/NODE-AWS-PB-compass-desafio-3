@@ -3,8 +3,11 @@ import { User } from '../models/usermodel.js'
 import bcrypt from 'bcrypt'
 import { Op } from 'sequelize'
 import UserService from '../services/user.service.js'
-import { UserfilterType, userInput } from '../definitions/users.types.js'
-import { filteredResponse } from '../definitions/clientes.types.js'
+import {
+  UserfilterType,
+  userInput
+} from '../definitions/users.def/users.types.js'
+import { filteredResponse } from '../definitions/clientes.def/clientes.types.js'
 
 class UserController {
   constructor(private userService: UserService) {}

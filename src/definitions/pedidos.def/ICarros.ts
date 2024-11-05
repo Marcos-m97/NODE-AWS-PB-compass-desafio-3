@@ -1,4 +1,4 @@
-import EStatusCarro from '../pedidos.enums/ECarro.js'
+import EStatusCarro from './ECarro.js'
 
 interface ICarro {
   id: string

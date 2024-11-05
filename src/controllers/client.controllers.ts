@@ -4,7 +4,7 @@ import {
   clientesInput,
   clientUpdates,
   filterType
-} from '../definitions/clientes.types.js'
+} from '../definitions/clientes.def/clientes.types.js'
 import Cliente from '../models/Cliente.js'
 
 class ClienteControler {

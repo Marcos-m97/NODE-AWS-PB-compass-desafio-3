@@ -3,7 +3,6 @@ import privateRoute from '../middlewares/auth.middlewere.js'
 import UserController from '../controllers/user.controller.js'
 import UserService from '../services/user.service.js'
 import UserRepositorie from '../repositories/user.repositorie.js'
-
 const userRepositorie = new UserRepositorie()
 const userService = new UserService(userRepositorie)
 const userController = new UserController(userService)

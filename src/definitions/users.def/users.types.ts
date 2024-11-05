@@ -1,9 +1,9 @@
-import { User } from "../models/usermodel";
+import { User } from '../../models/usermodel.js'
 
 export type userInput = {
-    fullName: string;
-    email: string;
-    password : string;
+  fullName: string
+  email: string
+  password: string
 }
 
 export type userCreation = {

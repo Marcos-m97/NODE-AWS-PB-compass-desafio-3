@@ -1,5 +1,5 @@
 import { where } from 'sequelize'
-import EStatusCarro from '../definitions/pedidos.enums/ECarro.js'
+import EStatusCarro from '../definitions/pedidos.def/ECarro.js'
 import Carro from '../models/Carro.js'
 
 class CarroRepository {

@@ -1,5 +1,5 @@
 import { stat } from 'fs'
-import EStatusCarro from '../definitions/pedidos.enums/ECarro.js'
+import EStatusCarro from '../definitions/pedidos.def/ECarro.js'
 import Carro from '../models/Carro.js'
 import CarroRepository from '../repositories/carros.repositorie.js'
 import { AppErrors } from '../middlewares/errorMiddlewere.js'

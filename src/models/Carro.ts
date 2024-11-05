@@ -2,8 +2,8 @@ import { Model, DataTypes } from 'sequelize'
 import sequelize from '../db.js'
 
 // import interfaces
-import ICarro from '../definitions/pedidos.interfaces/ICarros.js'
-import EStatusCarro from '../definitions/pedidos.enums/ECarro.js'
+import ICarro from '../definitions/pedidos.def/ICarros.js'
+import EStatusCarro from '../definitions/pedidos.def/ECarro.js'
 
 class Carro extends Model<ICarro> {
   public id!: string

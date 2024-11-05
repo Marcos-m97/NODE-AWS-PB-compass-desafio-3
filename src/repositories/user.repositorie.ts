@@ -1,4 +1,8 @@
-import { userCreation, UserfilterType, userInput } from '../definitions/users.types.js'
+import {
+  userCreation,
+  UserfilterType,
+  userInput
+} from '../definitions/users.def/users.types.js'
 import { User } from '../models/usermodel.js'
 
 class UserRepositorie {

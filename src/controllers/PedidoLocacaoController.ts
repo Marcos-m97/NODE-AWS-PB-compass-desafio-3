@@ -3,7 +3,7 @@ import PedidoService from '../services/PedidoLocacaoService.js'
 import Pedido from '../models/Pedido.js'
 
 // import Intefaces
-import PedidoRequestBody from '../definitions/pedidos.interfaces/IPedidoRequestBody.js'
+import PedidoRequestBody from '../definitions/pedidos.def/IPedidoRequestBody.js'
 
 class PedidoController {
   private pedidoService: PedidoService

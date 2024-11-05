@@ -1,4 +1,9 @@
-import { userCreation, userInput, UserfilterType, UserfilteredResponse } from '../definitions/users.types.js'
+import {
+  userCreation,
+  userInput,
+  UserfilterType,
+  UserfilteredResponse
+} from '../definitions/users.def/users.types.js'
 import { AppErrors } from '../middlewares/errorMiddlewere.js'
 import UserRepositorie from '../repositories/user.repositorie.js'
 import { User } from '../models/usermodel.js'
@@ -9,7 +14,6 @@ import {
   validPassword
 } from '../utilis/functions.js'
 import bcrypt from 'bcrypt'
-
 
 class UserService {
   constructor(private userRepositorie: UserRepositorie) {}
@@ -141,9 +145,7 @@ class UserService {
         offset
       )
 
-      const totalUsers = await this.userRepositorie.countClientes(
-        whereClaus
-      )
+      const totalUsers = await this.userRepositorie.countClientes(whereClaus)
 
       let pagesQty = Math.ceil(totalUsers / limit)
 

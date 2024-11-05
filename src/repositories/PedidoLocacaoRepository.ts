@@ -2,10 +2,10 @@ import Pedido from '../models/Pedido.js'
 import Carro from '../models/Carro.js'
 import Cliente from '../models/Cliente.js'
 import { Op, WhereOptions, Optional, Sequelize } from 'sequelize'
-import IPedido from '../definitions/pedidos.interfaces/IPedidos.js'
+import IPedido from '../definitions/pedidos.def/IPedidos.js'
 import { UUID } from 'crypto'
 import { AppErrors } from '../middlewares/errorMiddlewere.js'
-import EStatusPedido from '../definitions/pedidos.enums/EPedido.js'
+import EStatusPedido from '../definitions/pedidos.def/EPedido.js'
 
 class PedidoRepository {
   public async findCarro(id: UUID): Promise<Carro | null> {
