@@ -12,7 +12,7 @@ class CarroRepository {
     }
   }
 
-  public async createCar(carroData: Carro): Promise<Carro> {
+  public async createCar(carroData: any): Promise<Carro> {
     try {
       const carro = await Carro.create(carroData)
       return carro
@@ -32,7 +32,7 @@ class CarroRepository {
 
   public async updateCar(
     id: string,
-    dadosAtualizados: Partial<{
+    dadosAtualizados: {
       marca?: string
       modelo?: string
       ano?: number
@@ -41,7 +41,7 @@ class CarroRepository {
       placa?: string
       valorDiaria?: number
       status?: EStatusCarro
-    }>
+    }
   ): Promise<Carro | null> {
     try {
       const [affectedRows] = await Carro.update(dadosAtualizados, {
@@ -61,31 +61,28 @@ class CarroRepository {
     }
   }
 
-  public async deleteCar(
-    id: string,
-    statusAtualizado: Partial<{ status: EStatusCarro.Excluido }>
-  ): Promise<Carro | null> {
+  public async deleteCar(id: string): Promise<Carro | null> {
     try {
-      const carExists = await this.findCarroId(id)
+      const carExists = await this.findCarroId(id);
 
       if (!carExists) {
-        return null
+        return null;
       }
 
-      console.log(statusAtualizado)
+      const statusAtualizado = new Date();
 
-      if (statusAtualizado) {
-        await Carro.update(statusAtualizado, {
-          where: { id },
-          returning: true
-        })
-      }
+      // Corrigido para passar o campo `dataDeExclusao` como um objeto
+      await Carro.update(
+        { dataDeExclusao: statusAtualizado }, // Objeto com o campo a ser atualizado
+        { where: { id } }
+      );
 
-      const carroAtualizado = await Carro.findOne({ where: { id } })
+      // Retorna o carro atualizado, que agora inclui a `dataDeExclusao`
+      carExists.dataDeExclusao = statusAtualizado;
+      return carExists;
 
-      return carroAtualizado
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 }

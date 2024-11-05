@@ -14,7 +14,7 @@ class CarroController {
     next: NextFunction
   ): Promise<Response | void> {
     try {
-      const carroData: Carro = req.body
+      const carroData: Partial<Carro> = req.body
       const carro = await this.carroService.createCarro(carroData)
       return res.status(201).json(carro)
     } catch (error) {
@@ -49,21 +49,21 @@ class CarroController {
     }
   }
 
-  // public async deleteCarro(
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ): Promise<Response | void> {
-  //   try {
-  //     const { id } = req.params
+  public async deleteCarro(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response | void> {
+    try {
+      const { id } = req.params
 
-  //     const deleteCarro = await this.carroService.deleteCarro(id)
+      const deleteCarro = await this.carroService.deleteCarro(id)
 
-  //     return res.status(200).json(deleteCarro)
-  //   } catch (error) {
-  //     throw error
-  //   }
-  // }
+      return res.status(200).json(deleteCarro)
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 export default CarroController

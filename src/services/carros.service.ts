@@ -1,8 +1,7 @@
-import { stat } from 'fs'
 import EStatusCarro from '../definitions/pedidos.def/ECarro.js'
+import { AppErrors } from '../middlewares/errorMiddlewere.js'
 import Carro from '../models/Carro.js'
 import CarroRepository from '../repositories/carros.repositorie.js'
-import { AppErrors } from '../middlewares/errorMiddlewere.js'
 
 class CarroService {
   private carroRepository: CarroRepository
@@ -10,7 +9,8 @@ class CarroService {
     this.carroRepository = carroRepository
   }
 
-  public async createCarro(carroData: Carro): Promise<Carro | null> {
+  
+  public async createCarro(carroData: Partial<Carro>): Promise<Carro | null> {
     try {
       const createCar = await this.carroRepository.createCar(carroData)
       return createCar
@@ -37,23 +37,15 @@ class CarroService {
     }
   }
 
-  // public async deleteCarro(id: string): Promise<Carro | null> {
-  //   try {
-  //     const statusDelete = { status: EStatusCarro.Excluido }
-
-  //     const deleteCarro = await this.carroRepository.deleteCar(id)
-
-  //     console.log(deleteCarro)
-
-  //     if (!deleteCarro) {
-  //       throw new AppErrors('Car not found.', 404)
-  //     }
-
-  //     return deleteCarro
-  //   } catch (error) {
-  //     throw error
-  //   }
-  // }
+  public async deleteCarro(id: string): Promise<void> {
+    try {
+      const deleteCarro = await this.carroRepository.deleteCar(id)
+      if (!deleteCarro) {
+        throw new AppErrors('Car not found.', 404)
+      }
+      return
+    } catch (error) {}
+  }
 }
 
 export default CarroService

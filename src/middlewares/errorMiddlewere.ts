@@ -16,9 +16,11 @@ let errorMiddlewere = function (
   next: NextFunction
 ) {
   if (error instanceof AppErrors) {
+    console.log(error)
     res.status(error.code).json({ error: error.message })
     return
   } else {
+    console.log(error)
     res.status(500).json({ error: 'internal server error' })
   }
 }

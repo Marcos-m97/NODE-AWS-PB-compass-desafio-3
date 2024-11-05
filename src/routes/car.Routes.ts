@@ -33,12 +33,20 @@ carroRouter.get('/', async (req, res, next) => {
   }
 })
 
-// carroRouter.put('/:id', async (req, res, next) => {
-//   try {
-//     await carroController.deleteCarro(req, res, next)
-//   } catch (error) {
-//     next(error)
-//   }
-// })
+carroRouter.patch('/:id', async (req, res, next) => {
+  try {
+    await carroController.deleteCarro(req, res, next)
+  } catch (error) {
+    next(error)
+  }
+})
+
+carroRouter.delete('/:id', async (req, res, next) => {
+  try {
+    await carroController.deleteCarro(req, res, next)
+  } catch (error) {
+    next(error)
+  }
+})
 
 export default carroRouter

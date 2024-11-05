@@ -3,10 +3,9 @@ import sequelize from '../db.js'
 
 // import interfaces
 import ICarro from '../definitions/pedidos.def/ICarros.js'
-import EStatusCarro from '../definitions/pedidos.def/ECarro.js'
 
 class Carro extends Model<ICarro> {
-  public id!: string
+  public id?: string
   public placa!: string
   public marca!: string
   public modelo!: string
@@ -14,8 +13,8 @@ class Carro extends Model<ICarro> {
   public km!: number
   public items!: Record<string, string>
   public valorDiaria!: number
-  public dataCadastro!: Date
-  public status!: EStatusCarro
+  public dataCadastro?: Date
+  public dataDeExclusao?: Date | null 
 }
 
 Carro.init(
@@ -57,12 +56,12 @@ Carro.init(
     dataCadastro: {
       type: DataTypes.DATE,
       allowNull: false,
-      defaultValue: Date.now
+      defaultValue: DataTypes.NOW
     },
-    status: {
-      type: DataTypes.ENUM('Ativo', 'Inativo', 'Excluido'),
-      allowNull: false,
-      defaultValue: 'Ativo'
+    dataDeExclusao: {
+      type: DataTypes.DATE,
+      allowNull: true, // Permite null para indicar que o carro não está excluído
+      defaultValue: null
     }
   },
   {
