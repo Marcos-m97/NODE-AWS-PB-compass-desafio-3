@@ -8,6 +8,7 @@ const sequelize = new Sequelize(
     host: process.env.DB_HOST,
     dialect: 'mysql',
     logging: false
+
   }
 )
 
@@ -16,7 +17,7 @@ export async function connectDB() {
     await sequelize.authenticate()
     console.log('|DB| Conectado com sucesso! 🎲')
     // await sequelize.sync()
-    await sequelize.sync({ force: true })
+    //await sequelize.sync({ force: true })
     //await sequelize.sync({ alter: true });
   } catch (err) {
     throw err

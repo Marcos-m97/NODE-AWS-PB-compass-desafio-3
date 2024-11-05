@@ -2,7 +2,7 @@ import { Router } from 'express'
 import PedidoController from '../controllers/PedidoLocacaoController.js'
 import PedidoRepository from '../repositories/PedidoLocacaoRepository.js'
 import PedidoService from '../services/PedidoLocacaoService.js'
-import privateRoute from '../middleweres/auth.middlewere.js'
+import privateRoute from '../middlewares/auth.middlewere.js'
 
 const pedidoRouter = Router()
 

@@ -7,8 +7,8 @@ import Cliente from './Cliente.js'
 import Carro from './Carro.js'
 
 // interfaces
-import IPedido from '../interfaces/IPedidos.js'
-import EStatusPedido from '../enums/EPedido.js'
+import IPedido from '../definitions/pedidos.interfaces/IPedidos.js'
+import EStatusPedido from '../definitions/pedidos.enums/EPedido.js'
 import { UUID } from 'crypto'
 
 export type pedidoInput = {

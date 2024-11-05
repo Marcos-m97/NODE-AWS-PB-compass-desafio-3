@@ -3,7 +3,7 @@ import AuthRepositorie from '../repositories/auth.repositorie.js'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcrypt'
 import { AuthInput, AuthResponse } from '../definitions/auth.types.js'
-import { AppErrors } from '../middleweres/errorMiddlewere.js'
+import { AppErrors } from '../middlewares/errorMiddlewere.js'
 
 async function comparePassword(
   password: string,

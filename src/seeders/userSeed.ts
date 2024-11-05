@@ -1,7 +1,7 @@
 import 'dotenv/config'
 import { User } from '../models/usermodel.js'
 import bcrypt from 'bcrypt'
-import { AppErrors } from '../middleweres/errorMiddlewere.js'
+import { AppErrors } from '../middlewares/errorMiddlewere.js'
 
 export async function createSeed(): Promise<User | undefined> {
   try {

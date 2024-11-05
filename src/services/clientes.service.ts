@@ -8,7 +8,7 @@ import {
   filteredResponse,
   uptdateInsertType
 } from '../definitions/clientes.types.js'
-import { AppErrors } from '../middleweres/errorMiddlewere.js'
+import { AppErrors } from '../middlewares/errorMiddlewere.js'
 import { Op } from 'sequelize'
 import {
   validarCPF,

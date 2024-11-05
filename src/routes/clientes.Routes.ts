@@ -1,15 +1,14 @@
-import { Router } from "express";
-import ClienteControler from "../controllers/client.controllers.js";
-import ClienteService from "../services/clientes.service.js";
-import ClientesRepositorie from "../repositories/clientes.repositorie.js";
-import privateRoute from "../middleweres/auth.middlewere.js";
+import { Router } from 'express'
+import ClienteControler from '../controllers/client.controllers.js'
+import ClienteService from '../services/clientes.service.js'
+import ClientesRepositorie from '../repositories/clientes.repositorie.js'
+import privateRoute from '../middlewares/auth.middlewere.js'
 
-const clienteRouter = Router();
+const clienteRouter = Router()
 
-
-const cientesRepositorie = new ClientesRepositorie();
-const clienteService = new ClienteService(cientesRepositorie);
-const clienteControler = new ClienteControler(clienteService);
+const cientesRepositorie = new ClientesRepositorie()
+const clienteService = new ClienteService(cientesRepositorie)
+const clienteControler = new ClienteControler(clienteService)
 
 /**
  * @swagger
@@ -109,13 +108,13 @@ const clienteControler = new ClienteControler(clienteService);
  *         description: Erro interno no servidor
  */
 
-clienteRouter.post("/cadastro", privateRoute, async (req, res, next) => {
+clienteRouter.post('/cadastro', privateRoute, async (req, res, next) => {
   try {
-    await clienteControler.createClientes(req, res, next);
+    await clienteControler.createClientes(req, res, next)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
 /**
  * @swagger
@@ -195,13 +194,13 @@ clienteRouter.post("/cadastro", privateRoute, async (req, res, next) => {
  *         description: Erro interno no servidor
  */
 
-clienteRouter.get("/visualizar/:id", privateRoute, async (req, res, next) => {
+clienteRouter.get('/visualizar/:id', privateRoute, async (req, res, next) => {
   try {
-    await clienteControler.getCliente(req, res, next);
+    await clienteControler.getCliente(req, res, next)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
 /**
  * @swagger
@@ -456,13 +455,13 @@ clienteRouter.get('/lista', privateRoute, async (req, res, next) => {
  *         description: Erro interno no servidor
  */
 
-clienteRouter.patch("/atualizar/:id", privateRoute, async (req, res, next) => {
+clienteRouter.patch('/atualizar/:id', privateRoute, async (req, res, next) => {
   try {
-    await clienteControler.updateCliente(req, res, next);
+    await clienteControler.updateCliente(req, res, next)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
 /**
  * @swagger
@@ -518,12 +517,12 @@ clienteRouter.patch("/atualizar/:id", privateRoute, async (req, res, next) => {
  *         description: Erro interno no servidor
  */
 
-clienteRouter.delete("/excluir/:id", privateRoute, async (req, res, next) => {
+clienteRouter.delete('/excluir/:id', privateRoute, async (req, res, next) => {
   try {
-    await clienteControler.deleteCliente(req, res, next);
+    await clienteControler.deleteCliente(req, res, next)
   } catch (error) {
-    next(error);
+    next(error)
   }
-});
+})
 
-export default clienteRouter;
+export default clienteRouter

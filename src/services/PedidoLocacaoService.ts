@@ -1,11 +1,11 @@
 import PedidoRepository from '../repositories/PedidoLocacaoRepository.js'
 import Pedido from '../models/Pedido.js'
-import IPedido from '../interfaces/IPedidos.js'
-import { AppErrors } from '../middleweres/errorMiddlewere.js'
+import IPedido from '../definitions/pedidos.interfaces/IPedidos.js'
+import { AppErrors } from '../middlewares/errorMiddlewere.js'
 import { calcularTaxaLocacao } from '../services/TaxaLocacaoService.js'
 import axios from 'axios'
 import https from 'https'
-import EStatusPedido from '../enums/EPedido.js'
+import EStatusPedido from '../definitions/pedidos.enums/EPedido.js'
 
 class PedidoService {
   private pedidoRepository: PedidoRepository

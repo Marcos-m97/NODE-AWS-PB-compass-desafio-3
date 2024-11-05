@@ -1,8 +1,8 @@
 import { stat } from 'fs'
-import EStatusCarro from '../enums/ECarro.js'
+import EStatusCarro from '../definitions/pedidos.enums/ECarro.js'
 import Carro from '../models/Carro.js'
 import CarroRepository from '../repositories/carros.repositorie.js'
-import { AppErrors } from '../middleweres/errorMiddlewere.js'
+import { AppErrors } from '../middlewares/errorMiddlewere.js'
 
 class CarroService {
   private carroRepository: CarroRepository

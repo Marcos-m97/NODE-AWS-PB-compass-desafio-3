@@ -1,8 +1,8 @@
-import { Router } from 'express';
-import userController from '../controllers/user.controller.js'; 
-import privateRoute from '../middleweres/auth.middlewere.js';
+import { Router } from 'express'
+import userController from '../controllers/user.controller.js'
+import privateRoute from '../middlewares/auth.middlewere.js'
 
-const router = Router();
+const router = Router()
 
 /**
  * @swagger
@@ -64,6 +64,14 @@ const router = Router();
  *                   type: string
  *                   example: "Campo 'email' é obrigatório."
  */
+
+router.post('/', privateRoute, async (req, res, next) => {
+  try {
+    await userController.createUser(req, res, next)
+  } catch (error) {
+    next(error)
+  }
+})
 
 /**
  * @swagger
@@ -158,6 +166,15 @@ const router = Router();
  *                   type: string
  *                   example: "Nenhum usuário encontrado."
  */
+router.get('/', privateRoute, async (req, res, next) => {
+  try {
+    await userController.getAllUsers(req, res, next)
+  } catch (error) {
+    next(error)
+  }
+})
+
+
 
 /**
  * @swagger
@@ -203,6 +220,15 @@ const router = Router();
  *                   type: string
  *                   example: "Usuário não encontrado."
  */
+router.get('/:id', privateRoute, async (req, res, next) => {
+  try {
+    await userController.getUserById(req, res, next)
+  } catch (error) {
+    next(error)
+  }
+})
+
+
 
 /**
  * @swagger
@@ -261,6 +287,15 @@ const router = Router();
  *                   type: string
  *                   example: "Usuário não encontrado."
  */
+router.put('/:id', privateRoute, async (req, res, next) => {
+  try {
+    await userController.updateUser(req, res, next)
+  } catch (error) {
+    next(error)
+  }
+})
+
+
 
 /**
  * @swagger
@@ -297,61 +332,12 @@ const router = Router();
  *                   type: string
  *                   example: "Usuário não encontrado."
  */
+router.delete('/:id', privateRoute, async (req, res, next) => {
+  try {
+    await userController.deleteUser(req, res, next)
+  } catch (error) {
+    next(error)
+  }
+})
 
-
-router.post('/',
-    privateRoute,
-    async (req, res, next) => {
-        try {
-          await userController.createUser(req, res, next);
-        } catch (error) {
-          next(error);
-        }
-      }
-    );
-
-    router.get('/', 
-        privateRoute, 
-        async (req, res, next) => {
-            try {
-                await userController.getAllUsers(req, res, next);
-            } catch (error) {
-                next(error);
-            }
-      });
-
-      router.get('/:id', 
-        privateRoute, 
-        async (req, res, next) => {
-        try {
-          await userController.getUserById(req, res, next);
-        } catch (error) {
-          next(error);
-        }
-      });
-
-      router.put('/:id', 
-        privateRoute, 
-        async (req, res, next) => {
-        try {
-          await userController.updateUser(req, res, next);
-        } catch (error) {
-          next(error);
-        }
-      });
-
-      router.delete('/:id', 
-        privateRoute, 
-        async (req, res, next) => {
-        try {
-          await userController.deleteUser(req, res, next);
-        } catch (error) {
-          next(error);
-        }
-      });
-      
-      
-      
-      
-
-    export default router;
+export default router

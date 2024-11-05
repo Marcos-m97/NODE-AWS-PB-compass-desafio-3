@@ -1,5 +1,5 @@
 import { UUID } from 'crypto'
-import EStatusPedido from '../enums/EPedido.js'
+import EStatusPedido from '../pedidos.enums/EPedido.js'
 
 interface IPedido {
   id?: UUID
