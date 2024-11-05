@@ -18,7 +18,7 @@ import bcrypt from 'bcrypt'
 class UserService {
   constructor(private userRepositorie: UserRepositorie) {}
 
-  public async registerUser(userData: userInput): Promise<User | void> {
+  public async registerUser(userData: userInput): Promise<User|null|void> {
     if (!userData.fullName) {
       throw new AppErrors('O campo fullName é obrigatório', 400)
     }
@@ -167,6 +167,14 @@ class UserService {
     } catch (err) {
       throw err
     }
+  }
+
+  public async getUser(id: string): Promise<User | void> {
+    const isUser = await this.userRepositorie.findUserById(id)
+    if (!isUser) {
+      throw new AppErrors('Usuário não encontrado.', 400)
+      }
+      return isUser!
   }
 }
 export default UserService

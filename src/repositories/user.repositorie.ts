@@ -6,7 +6,7 @@ import {
 import { User } from '../models/usermodel.js'
 
 class UserRepositorie {
-  public async findbyEmail(userEmail: string): Promise<User | null> {
+  public async findbyEmail(userEmail?: string): Promise<User | null> {
     try {
       const existingUser = await User.findOne({
         where: { email: userEmail }
@@ -14,6 +14,15 @@ class UserRepositorie {
       return existingUser
     } catch (error) {
       throw error
+    }
+  }
+
+  public async findUserById(userId: string): Promise<User | null> {
+    try {
+      const user = await User.findByPk(userId)
+      return user
+    } catch (err) {
+      throw err
     }
   }
 

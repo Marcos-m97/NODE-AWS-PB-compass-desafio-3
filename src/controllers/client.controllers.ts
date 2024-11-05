@@ -84,9 +84,7 @@ class ClienteControler {
   ): Promise<Response | void> {
     try {
       const clienteId: string = req.params.id
-
       const updates: clientUpdates = req.body
-
       const updated = await this.clienteService.redefineClientes(
         updates,
 
@@ -95,15 +93,10 @@ class ClienteControler {
 
       return res.status(200).json({
         Id: clienteId,
-
         nomeCompleto: updated!.nome,
-
         dataDeNascimento: updated!.dataNascimento,
-
         CPF: updated!.cpf,
-
         email: updated!.email,
-
         telefone: updated!.telefone
       })
     } catch (error) {

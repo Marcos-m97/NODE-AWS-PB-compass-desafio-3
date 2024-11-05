@@ -7,7 +7,6 @@ import {
   UserfilterType,
   userInput
 } from '../definitions/users.def/users.types.js'
-import { filteredResponse } from '../definitions/clientes.def/clientes.types.js'
 
 class UserController {
   constructor(private userService: UserService) {}
@@ -45,10 +44,12 @@ class UserController {
         : undefined,
       excluded: req.query.excluido as string
     }
+
     const orderBy = (req.query.orderBy as string) || 'createdAt'
     const orderDirection = (req.query.orderDirection as string) || 'ASC'
     const limit = parseInt(req.query.limit as string) || 5
     const page = parseInt(req.query.page as string) || 1
+
     try {
       const filteredList = await this.userService.filterUsers(
         dataFilter,
@@ -70,16 +71,7 @@ class UserController {
   ): Promise<Response | void> {
     try {
       const { id } = req.params
-
-      const user = await User.findOne({
-        where: { id, deletedAt: null },
-        attributes: ['id', 'fullName', 'email', 'createdAt']
-      })
-
-      if (!user) {
-        return res.status(404).json({ message: 'Usuário não encontrado.' })
-      }
-
+      const user = await this.userService.getUser(id)
       return res.status(200).json(user)
     } catch (error) {
       next(error)
