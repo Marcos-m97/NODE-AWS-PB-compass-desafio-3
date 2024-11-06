@@ -14,7 +14,7 @@ export async function connectDB() {
     console.log('|DB| Conectado com sucesso! 🎲')
 
     // Sincronização com o banco de dados
-    await sequelize.sync({ force: true }) // Recria as tabelas toda vez, ideal para protótipos
+    //await sequelize.sync({ force: true }) // Recria as tabelas toda vez, ideal para protótipos
   } catch (err) {
     throw err
   }
