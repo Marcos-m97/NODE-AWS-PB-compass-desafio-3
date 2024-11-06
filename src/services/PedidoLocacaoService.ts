@@ -7,8 +7,6 @@ import axios from 'axios'
 import https from 'https'
 import EStatusPedido from '../definitions/pedidos.def/EPedido.js'
 
-
-
 class PedidoService {
   private pedidoRepository: PedidoRepository
   constructor(pedidoRepository: PedidoRepository) {

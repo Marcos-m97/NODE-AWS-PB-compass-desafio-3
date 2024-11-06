@@ -1,6 +1,7 @@
 import { where } from 'sequelize'
 import EStatusCarro from '../definitions/pedidos.def/ECarro.js'
 import Carro from '../models/Carro.js'
+import { carUpdateType } from '../definitions/cars.def/cars.types.js'
 
 class CarroRepository {
   public async findCarroId(id: string): Promise<Carro | null> {
@@ -32,16 +33,7 @@ class CarroRepository {
 
   public async updateCar(
     id: string,
-    dadosAtualizados: {
-      marca?: string
-      modelo?: string
-      ano?: number
-      km?: number
-      items?: Record<string, string>
-      placa?: string
-      valorDiaria?: number
-      status?: EStatusCarro
-    }
+    dadosAtualizados: carUpdateType
   ): Promise<Carro | null> {
     try {
       const [affectedRows] = await Carro.update(dadosAtualizados, {

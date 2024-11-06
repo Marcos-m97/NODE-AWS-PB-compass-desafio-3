@@ -1,4 +1,4 @@
-import EStatusCarro from '../definitions/pedidos.def/ECarro.js'
+import { carUpdateType } from '../definitions/cars.def/cars.types.js'
 import { AppErrors } from '../middlewares/errorMiddlewere.js'
 import Carro from '../models/Carro.js'
 import CarroRepository from '../repositories/carros.repositorie.js'
@@ -37,14 +37,29 @@ class CarroService {
     }
   }
 
-  public async deleteCarro(id: string): Promise<void> {
+
+   public async atualizarCarro(id: string, updateData:carUpdateType): Promise<Carro> {
+    try {
+      const updatedCar = await this.carroRepository.updateCar(id,updateData)
+      if (!updatedCar) {
+        throw new AppErrors('Car not found.', 404)
+      }
+      return updatedCar
+    } catch (error) {
+      throw error
+    }
+  }
+
+  public async deleteCarro(id: string): Promise<Carro> {
     try {
       const deleteCarro = await this.carroRepository.deleteCar(id)
       if (!deleteCarro) {
         throw new AppErrors('Car not found.', 404)
       }
-      return
-    } catch (error) {}
+      return deleteCarro
+    } catch (error) {
+      throw error
+    }
   }
 }
 
