@@ -11,7 +11,6 @@ interface UserAttributes {
   deletedAt?: Date | null;
 }
 
-//interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'createdAt' | 'deletedAt'> {}
 
 class User extends Model<UserAttributes> {
   public id?: string;
