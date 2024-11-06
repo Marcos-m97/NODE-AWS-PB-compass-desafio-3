@@ -203,7 +203,6 @@ router.post('/', privateRoute, async (req, res, next) => {
  *       '500':
  *         description: Erro interno no servidor
  */
-
 router.get('/', privateRoute, async (req, res, next) => {
   try {
     await userController.getAllUsers(req, res, next)

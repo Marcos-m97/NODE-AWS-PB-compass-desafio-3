@@ -6,15 +6,13 @@ import privateRoute from '../middlewares/auth.middlewere.js'
 
 const pedidoRouter = Router()
 
-// import dep.
 const pedidoRepository = new PedidoRepository()
 const pedidoService = new PedidoService(pedidoRepository)
 const pedidoController = new PedidoController(pedidoService)
 
-// Swagger Create
 /**
  * @swagger
- * /api/v1/pedidos/create:
+ * /api/v1/pedidos:
  *   post:
  *     summary: Realiza a criação de pedidos no sistema.
  *     tags: [Pedidos]
@@ -114,7 +112,6 @@ const pedidoController = new PedidoController(pedidoService)
  *                   example: "Cliente não encontrado"
  *
  */
-
 pedidoRouter.post('/', privateRoute, async (req, res, next) => {
   try {
     await pedidoController.pedidoCreate(req, res, next)
@@ -123,25 +120,27 @@ pedidoRouter.post('/', privateRoute, async (req, res, next) => {
   }
 })
 
-// Swagger SearchId
+
 /**
  * @swagger
- * /api/v1/pedidos/searchId:
+ * /api/v1/pedidos/{id}:
  *   get:
  *     summary: Retorna os detalhes de um pedido específico.
  *     tags: [Pedidos]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               id:
- *                 type: UUID
- *                 description: ID do Pedido.
- *                 example: "5e07e29e-a3d8-440b-8991-7703773b6..."
- *
+ *     description: >
+ *       Endpoint protegido para retornar os detalhes de um pedido específico pelo ID.
+ *       É necessário um token JWT para acessar essa rota.
+ *     security:
+ *       - bearerAuth: []  # Rota protegida pelo JWT
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: ID único do pedido.
+ *         example: "5e07e29e-a3d8-440b-8991-7703773b6..."
  *     responses:
  *       200:
  *         description: Detalhes do Pedido retornado.
@@ -286,7 +285,6 @@ pedidoRouter.post('/', privateRoute, async (req, res, next) => {
  *                   description: Mensagem de erro.
  *                   example: "Pedido não encontrado."
  */
-
 pedidoRouter.get('/:id', privateRoute, async (req, res, next) => {
   try {
     await pedidoController.searchPedido(req, res, next)
@@ -295,7 +293,7 @@ pedidoRouter.get('/:id', privateRoute, async (req, res, next) => {
   }
 })
 
-// Swagger SearchAll
+
 /**
  * @swagger
  * /api/v1/pedidos:
@@ -459,21 +457,13 @@ pedidoRouter.get('/', privateRoute, async (req, res, next) => {
   }
 })
 
-// Swagger UpdatePedido
+
 /**
  * @swagger
- * /api/v1/pedidos/updatePedido:
+ * /api/v1/pedidos:
  *   patch:
  *     summary: Atualiza os detalhes de um pedido específico.
  *     tags: [Pedidos]
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: string
- *         description: ID do pedido a ser atualizado.
- *         example: "71ad2628-b67a-4e90-beac-8a76b2e8..."
  *     requestBody:
  *       required: true
  *       content:
@@ -607,32 +597,27 @@ pedidoRouter.patch(
   }
 )
 
-// Swagger deletePedido
+
 /**
  * @swagger
- * /api/v1/pedidos/deletePedido:
+ * /api/v1/pedidos/{id}:
  *   delete:
  *     summary: Cancela um pedido específico.
  *     tags: [Pedidos]
+ *     description: >
+ *       Endpoint protegido para cancelar um pedido específico pelo ID.
+ *       É necessário um token JWT para acessar essa rota.
+ *     security:
+ *       - bearerAuth: []  # Rota protegida pelo JWT
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: string
- *         description: ID do pedido a ser Cancelado.
+ *           format: uuid
+ *         description: ID do pedido a ser cancelado.
  *         example: "649350eb-2e93-44d2-b0cf-b1713a86a081"
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               id:
- *                 type: string
- *                 description: ID do pedido que será Cancelado.
- *                 example: "649350eb-2e93-44d2-b0cf-b1713a86a081"
  *     responses:
  *       204:
  *         description: Pedido cancelado com sucesso.
