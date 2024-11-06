@@ -68,16 +68,19 @@ class ClienteService {
     }
 
     try {
-      const existingClientes = await this.clientesRepositorie.findCliente(
-        clientesData.email,
+      const existingClientes = await this.clientesRepositorie.findClienteByEmail(
+        clientesData.email
+      )
+      const existbyCPF = await this.clientesRepositorie.findClienteByCPF(
         clientesData.cpf
       )
 
-      if (existingClientes && existingClientes.dataExclusao === null) {
+      if (
+        (existingClientes && existingClientes.dataExclusao == null) ||
+        (existbyCPF && existbyCPF.dataExclusao == null)
+      ) {
         throw new AppErrors('Cliente já cadastrado', 409)
-      }
-
-      if (!existingClientes || existingClientes.dataExclusao !== null) {
+      } else  {
         const newCliente = await this.clientesRepositorie.createCliente({
           nome: clientesData.nome,
           dataNascimento: parsedDataDeNascimento,
@@ -219,7 +222,6 @@ class ClienteService {
       throw new AppErrors('Cliente não encontrado', 404)
     }
 
-    
     if (existCliente.dataExclusao) {
       throw new AppErrors('Cliente excluido', 409)
     }

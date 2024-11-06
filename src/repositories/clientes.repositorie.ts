@@ -4,7 +4,7 @@ import {
   clientUpdates,
   filterType
 } from '../definitions/clientes.def/clientes.types.js'
-import { Op } from 'sequelize'
+
 
 class ClientesRepositorie {
   public async createCliente(newCliente: clientesInput): Promise<Cliente> {
@@ -59,29 +59,11 @@ class ClientesRepositorie {
     }
   }
 
-  public async findCliente(
-    email?: string,
-    cpf?: string
-  ): Promise<Cliente | null> {
-    try {
-      const clientes = await Cliente.findOne({
-        where: {
-          [Op.or]: [{ email: email }, { cpf: cpf }]
-        }
-      })
-      return clientes
-    } catch (err) {
-      throw err
-    }
-  }
+
 
   public async findClienteByCPF(cpf: string): Promise<Cliente | null> {
     try {
-      const cliente = await Cliente.findOne({
-        where: {
-          cpf: cpf
-        }
-      })
+      const cliente = await Cliente.findOne({where: {cpf: cpf}})
       return cliente
     } catch (err) {
       throw err

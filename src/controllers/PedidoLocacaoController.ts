@@ -125,7 +125,6 @@ class PedidoController {
     try {
       const id = req.params.id
       const pedidoDelete = await this.pedidoService.deletePedido(id)
-
       return res.status(204).json(pedidoDelete)
     } catch (error) {
       next(error)

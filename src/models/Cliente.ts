@@ -39,7 +39,6 @@ Cliente.init(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true
     },
     telefone: {
       type: DataTypes.STRING,

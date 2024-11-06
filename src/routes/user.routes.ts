@@ -379,6 +379,11 @@ router.patch('/:id', privateRoute, async (req, res, next) => {
  *                 message:
  *                   type: string
  *                   example: "Usuário excluído com sucesso."
+ *                 dataDeExclusao:
+ *                   type: string
+ *                   format: date-time
+ *                   description: Data de exclusão lógica do carro
+ *                   example: "2023-07-15T08:30:00Z"
  *       404:
  *         description: Usuário não encontrado.
  *         content:

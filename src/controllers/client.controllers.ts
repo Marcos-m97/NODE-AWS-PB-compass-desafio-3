@@ -112,18 +112,15 @@ class ClienteControler {
 
   public async deleteCliente(
     req: Request,
-
     res: Response,
-
     next: NextFunction
   ): Promise<Response | void> {
     const { id } = req.params
 
     try {
       const deleted = await this.clienteService.softDeleteCliente(id)
-
       return res.status(200).json({
-        message: 'Usuário excluído com sucesso.',
+        message: 'Cliente excluído com sucesso.',
         data: deleted.dataExclusao
       })
     } catch (error) {
