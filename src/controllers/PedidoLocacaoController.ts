@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import PedidoService from '../services/PedidoLocacaoService.js'
 import Pedido from '../models/Pedido.js'
 
-// import Intefaces
+
 import PedidoRequestBody, {
   filtertype
 } from '../definitions/pedidos.def/IPedidoRequestBody.js'
@@ -61,7 +61,6 @@ class PedidoController {
           : undefined
       }
 
-      // Busca por `statusPedido`
       if (filter.statusPedido) {
         const pedidoAllStatusPedido = await this.pedidoService.searchAllPedidos(
           filter.statusPedido
@@ -69,7 +68,6 @@ class PedidoController {
         return res.status(200).json(pedidoAllStatusPedido)
       }
 
-      // Busca por CPF
       if (filter.cpf) {
         const pedidoByCpf = await this.pedidoService.searchPedidoForCpf(
           filter.cpf
@@ -77,7 +75,6 @@ class PedidoController {
         return res.status(200).json(pedidoByCpf)
       }
 
-      // Busca por Range de Datas e Ordenação
       if (filter.dataHoraInicial || filter.dataHoraFinal || filter.orderBy) {
         const pedidoByRangeData =
           await this.pedidoService.searchPedidoForRangeData(
@@ -88,7 +85,6 @@ class PedidoController {
         return res.status(200).json(pedidoByRangeData)
       }
 
-      // Paginação
       const pedidoAllPageSize = await this.pedidoService.searchAllPedidos(
         null,
         filter.page,

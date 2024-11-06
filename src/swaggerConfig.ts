@@ -1,4 +1,4 @@
-import swaggerJsdoc from 'swagger-jsdoc';
+import swaggerJsdoc from 'swagger-jsdoc'
 
 const options = {
   definition: {
@@ -6,31 +6,34 @@ const options = {
     info: {
       title: 'Compass Car API',
       version: '1.0.0',
-      description: 'API para um sistema de locação de carros.',
+      description: 'API para um sistema de locação de carros.'
     },
     servers: [
       {
-        url: 'http://localhost:3000',
-      },
+        url: 'http://localhost:3000'
+      }
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
-          bearerFormat: 'JWT',
-        },
-      },
+          bearerFormat: 'JWT'
+        }
+      }
     },
     security: [
       {
-        bearerAuth: [], // Aplica autenticação JWT a todas as rotas
-      },
-    ],
+        bearerAuth: [] // Aplica autenticação JWT a todas as rotas
+      }
+    ]
   },
-  apis: ['./src/routes/*.ts'], // Caminho para os arquivos com anotação Swagger
-};
+  apis: ['./src/routes/*.ts'] // Caminho para os arquivos com anotação Swagger
+}
 
-const swaggerSpec = swaggerJsdoc(options);
+const swaggerSpec = swaggerJsdoc(options)
 
-export default swaggerSpec;
+// Imprime o JSON no console para direcioná-lo para o arquivo
+//console.log(JSON.stringify(swaggerSpec, null, 2))
+
+export default swaggerSpec

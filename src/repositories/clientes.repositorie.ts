@@ -59,8 +59,6 @@ class ClientesRepositorie {
     }
   }
 
-
-
   public async findClienteByCPF(cpf: string): Promise<Cliente | null> {
     try {
       const cliente = await Cliente.findOne({where: {cpf: cpf}})
