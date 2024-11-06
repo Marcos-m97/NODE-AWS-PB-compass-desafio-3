@@ -108,7 +108,7 @@ const clienteControler = new ClienteControler(clienteService)
  *         description: Erro interno no servidor
  */
 
-clienteRouter.post('/cadastro', privateRoute, async (req, res, next) => {
+clienteRouter.post('/', privateRoute, async (req, res, next) => {
   try {
     await clienteControler.createClientes(req, res, next)
   } catch (error) {
@@ -194,7 +194,7 @@ clienteRouter.post('/cadastro', privateRoute, async (req, res, next) => {
  *         description: Erro interno no servidor
  */
 
-clienteRouter.get('/visualizar/:id', privateRoute, async (req, res, next) => {
+clienteRouter.get('/:id', privateRoute, async (req, res, next) => {
   try {
     await clienteControler.getCliente(req, res, next)
   } catch (error) {
@@ -350,7 +350,7 @@ clienteRouter.get('/visualizar/:id', privateRoute, async (req, res, next) => {
  *         description: Erro interno no servidor
  */
 
-clienteRouter.get('/lista', privateRoute, async (req, res, next) => {
+clienteRouter.get('/', privateRoute, async (req, res, next) => {
   try {
     await clienteControler.readClientes(req, res, next)
   } catch (error) {
@@ -455,7 +455,7 @@ clienteRouter.get('/lista', privateRoute, async (req, res, next) => {
  *         description: Erro interno no servidor
  */
 
-clienteRouter.patch('/atualizar/:id', privateRoute, async (req, res, next) => {
+clienteRouter.patch('/:id', privateRoute, async (req, res, next) => {
   try {
     await clienteControler.updateCliente(req, res, next)
   } catch (error) {
@@ -517,7 +517,7 @@ clienteRouter.patch('/atualizar/:id', privateRoute, async (req, res, next) => {
  *         description: Erro interno no servidor
  */
 
-clienteRouter.delete('/excluir/:id', privateRoute, async (req, res, next) => {
+clienteRouter.delete('/:id', privateRoute, async (req, res, next) => {
   try {
     await clienteControler.deleteCliente(req, res, next)
   } catch (error) {

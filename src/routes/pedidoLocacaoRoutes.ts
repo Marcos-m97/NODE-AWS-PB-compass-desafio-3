@@ -115,7 +115,7 @@ const pedidoController = new PedidoController(pedidoService)
  *
  */
 
-pedidoRouter.post('/create', privateRoute, async (req, res, next) => {
+pedidoRouter.post('/', privateRoute, async (req, res, next) => {
   try {
     await pedidoController.pedidoCreate(req, res, next)
   } catch (error) {
@@ -287,7 +287,7 @@ pedidoRouter.post('/create', privateRoute, async (req, res, next) => {
  *                   example: "Pedido não encontrado."
  */
 
-pedidoRouter.get('/searchId/:id', privateRoute, async (req, res, next) => {
+pedidoRouter.get('/:id', privateRoute, async (req, res, next) => {
   try {
     await pedidoController.searchPedido(req, res, next)
   } catch (error) {
@@ -451,7 +451,7 @@ pedidoRouter.get('/searchId/:id', privateRoute, async (req, res, next) => {
  *                   description: Mensagem de erro detalhada.
  *                   example: "Nenhum pedido encontrado."
  */
-pedidoRouter.get('/searchAll', privateRoute, async (req, res, next) => {
+pedidoRouter.get('/', privateRoute, async (req, res, next) => {
   try {
     await pedidoController.searchPedidoAll(req, res, next)
   } catch (error) {
@@ -596,7 +596,7 @@ pedidoRouter.get('/searchAll', privateRoute, async (req, res, next) => {
  *                   example: "Pedido não encontrado."
  */
 pedidoRouter.patch(
-  '/updatePedido',
+  '/',
   privateRoute,
   async (req, res, next) => {
     try {
@@ -669,7 +669,7 @@ pedidoRouter.patch(
  *                   example: "Pedido não encontrado."
  */
 pedidoRouter.delete(
-  '/deletePedido/:id',
+  '/:id',
   privateRoute,
   async (req, res, next) => {
     try {
