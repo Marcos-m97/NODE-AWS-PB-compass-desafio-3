@@ -710,7 +710,7 @@
         }
       }
     },
-    "/api/v1/clientes/cadastro": {
+    "/api/v1/clientes": {
       "post": {
         "summary": "Cria um novo cliente",
         "tags": [
@@ -843,120 +843,7 @@
             "description": "Erro interno no servidor"
           }
         }
-      }
-    },
-    "/api/v1/clientes/visualizar/{id}": {
-      "get": {
-        "summary": "Visualizar um cliente pelo ID",
-        "tags": [
-          "Clientes"
-        ],
-        "description": "Endpoint para visualizar as informações detalhadas de um cliente específico, utilizando seu ID.",
-        "security": [
-          {
-            "bearerAuth": []
-          }
-        ],
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "O ID do cliente a ser visualizado"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Cliente retornado com sucesso",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string",
-                      "example": "e7d66f9d-3c10-4e9e-b939-8a3a19159b6d"
-                    },
-                    "nomeCompleto": {
-                      "type": "string",
-                      "example": "alan Lima pereira"
-                    },
-                    "dataDeNascimento": {
-                      "type": "string",
-                      "format": "date",
-                      "example": "1997-11-11"
-                    },
-                    "cpf": {
-                      "type": "string",
-                      "example": "321.654.987-22"
-                    },
-                    "email": {
-                      "type": "string",
-                      "format": "email",
-                      "example": "marian111.lima95@yahoo.com"
-                    },
-                    "telefone": {
-                      "type": "string",
-                      "example": "11987654321"
-                    },
-                    "dataCadastro": {
-                      "type": "string",
-                      "format": "date-time",
-                      "example": "2024-10-13T17:39:38.000Z"
-                    },
-                    "dataExclusao": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true,
-                      "example": null
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Falha na autenticação JWT (Token inválido ou ausente)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Token inválido ou ausente"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Cliente não encontrado",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "message": {
-                      "type": "string",
-                      "example": "Cliente não encontrado"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Erro interno no servidor"
-          }
-        }
-      }
-    },
-    "/api/v1/clientes/list": {
+      },
       "get": {
         "summary": "Lista todos os clientes cadastrados (incluindo excluídos ou não)",
         "tags": [
@@ -1167,7 +1054,116 @@
         }
       }
     },
-    "/api/v1/clientes/atualizar/{id}": {
+    "/api/v1/clientes/{id}": {
+      "get": {
+        "summary": "Visualizar um cliente pelo ID",
+        "tags": [
+          "Clientes"
+        ],
+        "description": "Endpoint para visualizar as informações detalhadas de um cliente específico, utilizando seu ID.",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "O ID do cliente a ser visualizado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cliente retornado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "e7d66f9d-3c10-4e9e-b939-8a3a19159b6d"
+                    },
+                    "nomeCompleto": {
+                      "type": "string",
+                      "example": "alan Lima pereira"
+                    },
+                    "dataDeNascimento": {
+                      "type": "string",
+                      "format": "date",
+                      "example": "1997-11-11"
+                    },
+                    "cpf": {
+                      "type": "string",
+                      "example": "321.654.987-22"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email",
+                      "example": "marian111.lima95@yahoo.com"
+                    },
+                    "telefone": {
+                      "type": "string",
+                      "example": "11987654321"
+                    },
+                    "dataCadastro": {
+                      "type": "string",
+                      "format": "date-time",
+                      "example": "2024-10-13T17:39:38.000Z"
+                    },
+                    "dataExclusao": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true,
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Falha na autenticação JWT (Token inválido ou ausente)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Token inválido ou ausente"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cliente não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Cliente não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor"
+          }
+        }
+      },
       "patch": {
         "summary": "Atualiza um cliente existente",
         "tags": [
@@ -1301,9 +1297,7 @@
             "description": "Erro interno no servidor"
           }
         }
-      }
-    },
-    "/api/v1/clientes/excluir/{id}": {
+      },
       "delete": {
         "summary": "Excluir cliente (soft delete)",
         "tags": [

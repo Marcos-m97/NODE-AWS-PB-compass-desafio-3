@@ -12,7 +12,7 @@ const clienteControler = new ClienteControler(clienteService)
 
 /**
  * @swagger
- * /api/v1/clientes/cadastro:
+ * /api/v1/clientes:
  *   post:
  *     summary: Cria um novo cliente
  *     tags:
@@ -107,7 +107,6 @@ const clienteControler = new ClienteControler(clienteService)
  *       500:
  *         description: Erro interno no servidor
  */
-
 clienteRouter.post('/', privateRoute, async (req, res, next) => {
   try {
     await clienteControler.createClientes(req, res, next)
@@ -118,7 +117,7 @@ clienteRouter.post('/', privateRoute, async (req, res, next) => {
 
 /**
  * @swagger
- * /api/v1/clientes/visualizar/{id}:
+ * /api/v1/clientes/{id}:
  *   get:
  *     summary: Visualizar um cliente pelo ID
  *     tags:
@@ -204,7 +203,7 @@ clienteRouter.get('/:id', privateRoute, async (req, res, next) => {
 
 /**
  * @swagger
- * /api/v1/clientes/list:
+ * /api/v1/clientes:
  *   get:
  *     summary: Lista todos os clientes cadastrados (incluindo excluídos ou não)
  *     tags:
@@ -360,7 +359,7 @@ clienteRouter.get('/', privateRoute, async (req, res, next) => {
 
 /**
  * @swagger
- * /api/v1/clientes/atualizar/{id}:
+ * /api/v1/clientes/{id}:
  *   patch:
  *     summary: Atualiza um cliente existente
  *     tags:
@@ -465,7 +464,7 @@ clienteRouter.patch('/:id', privateRoute, async (req, res, next) => {
 
 /**
  * @swagger
- * /api/v1/clientes/excluir/{id}:
+ * /api/v1/clientes/{id}:
  *   delete:
  *     summary: Excluir cliente (soft delete)
  *     tags:
