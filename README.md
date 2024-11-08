@@ -97,7 +97,7 @@ O servidor estará rodando em http://localhost:3000.
 # Documentação da API
 
 A documentação da API foi gerada usando Swagger. Você pode acessar a documentação completa e testar os endpoints diretamente na interface do Swagger.
-garanta que o servidor esteja rodando na porta 3000 e acesse http://localhost:3000 em seu navegador para acessar a documentação.
+garanta que o servidor esteja rodando na porta 8080 e acesse http://ec2-3-147-63-136.us-east-2.compute.amazonaws.com:8080/api/v1 em seu navegador para acessar a documentação.
 
 ## Endpoints Principais
 

@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3000"
+      "url": "http://ec2-3-147-63-136.us-east-2.compute.amazonaws.com:8080"
     }
   ],
   "components": {
